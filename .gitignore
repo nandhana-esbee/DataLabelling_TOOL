@@ -1,0 +1,7 @@
+/envi
+
+Server\__pycache__
+Server\migrations
+__pycache__
+migrations
+.pyc
