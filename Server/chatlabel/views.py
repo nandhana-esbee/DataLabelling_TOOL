@@ -1,6 +1,6 @@
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-
+import os
 from .models import Filestorage, Textindex, Textlabel
 from .serializers import FilestorageSerializer, TextindexSerializer, TextlabelSerializer
 from utils import TextnameList
@@ -26,3 +26,17 @@ class FilestorageView(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)       
        
+    def delete(self, request, *args, **kwargs):
+        '''
+        Delete all the data in the Filestorage, Textindex and Textlabel table
+        '''
+        file = Filestorage.objects.all().last().file.name
+        try:
+            os.remove(file)
+            Filestorage.objects.all().delete()
+            Textindex.objects.all().delete()
+            Textlabel.objects.all().delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
