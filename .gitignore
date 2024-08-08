@@ -5,3 +5,6 @@ Server\migrations
 __pycache__
 migrations
 .pyc
+.env
+env
+files
